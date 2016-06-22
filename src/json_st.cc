@@ -8,6 +8,17 @@ using namespace JSON;
 /** Indentation counter */
 static unsigned int ind;
 
+/** Minify flag */
+static bool minify_f;
+
+void JSON::minify() {
+    minify_f = true;
+}
+
+void JSON::pretty() {
+    minify_f = false;
+}
+
 Value::Value() : type_t(NIL) { }
 
 Value::Value(const long long int i) : int_v(i), type_t(INT) { }
@@ -410,18 +421,19 @@ ostream& operator<<(ostream& os, const Value& v)
 
 ostream& operator<<(ostream& os, const Object& o)
 {
-    os << "{\n";
+    os << "{";
+    if (!minify_f) os << "\n";
     ind++;
     for (auto e = o.begin(); e != o.end();)
     {
-        JSON::indent(os);
+        if (!minify_f) JSON::indent(os);
         os << '"' << e->first << '"' << ": " << e->second;
         if (++e != o.end())
             os << ",";
-        os << "\n";
+        if (!minify_f) os << "\n";
     }
     ind--;
-    JSON::indent(os);
+    if (!minify_f) JSON::indent(os);
     os << "}";
 
     return os;
@@ -429,18 +441,19 @@ ostream& operator<<(ostream& os, const Object& o)
 
 ostream& operator<<(ostream& os, const Array& a)
 {
-    os << "[\n";
+    os << "[";
+    if (!minify_f) os << "\n";
     ind++;
     for (auto e = a.begin(); e != a.end();)
     {
-        JSON::indent(os);
+        if (!minify_f) JSON::indent(os);
         os << (*e);
         if (++e != a.end())
             os << ",";
-        os << "\n";
+        if (!minify_f) os << "\n";
     }
     ind--;
-    JSON::indent(os);
+    if (!minify_f) JSON::indent(os);
     os << "]";
 
     return os;

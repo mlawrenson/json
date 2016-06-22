@@ -7,13 +7,12 @@ using namespace JSON;
 int main(int argc, char** argv)
 {
     // Load JSON file
-
     if (argc > 1)
     {
       cout << argv[1] << endl;
       Value v = parse_file(argv[1]);
-      cerr << v << endl;
-      cerr << "---" << endl;
+      cout << v << endl;
+      cout << "---" << endl;
     }
 
     // Build object programmatically
@@ -40,7 +39,20 @@ int main(int argc, char** argv)
 
     obj["beer"] = a;
 
-    cerr << obj << endl;
+    cout << "Pretty" << endl;
+    cout << obj << endl;
+
+    // Minify and test again
+    minify();
+    cout << "---" << endl;
+    cout << "Minified" << endl;
+    cout << obj << endl;
+
+    // Pretty and test again
+    pretty();
+    cout << "---" << endl;
+    cout << "Pretty" << endl;
+    cout << obj << endl;
 
     return 0;
 }

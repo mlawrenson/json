@@ -8,6 +8,9 @@
 
 namespace JSON 
 {
+    /** Minify flag setter */
+    void minify();
+    void pretty();
 
     /** Possible JSON type of a value (array, object, bool, ...). */
     enum ValueType
